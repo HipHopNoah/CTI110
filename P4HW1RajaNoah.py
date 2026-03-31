@@ -10,9 +10,9 @@ numbers = []
 for scorecount in range(int(input("How many scores do you want to enter? "))):
     scorecount = scorecount + 1
     actscore = float(input(f"Enter score #{scorecount}: "))
-    if actscore >= 0:
+    if actscore >= 0 and actscore <=100:
         numbers.append(actscore)
-    if actscore < 0:
+    if actscore < 0 or actscore > 100:
         print()
         print("INVALID Score entered")
         print("Score should be between 0 and 100")
