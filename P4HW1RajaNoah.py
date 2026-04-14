@@ -10,8 +10,6 @@ numbers = []
 for scorecount in range(int(input("How many scores do you want to enter? "))):
     scorecount = scorecount + 1
     actscore = float(input(f"Enter score #{scorecount}: "))
-    if actscore >= 0 and actscore <=100:
-        numbers.append(actscore)
     while actscore < 0 or actscore > 100:
         print()
         print("INVALID Score entered")
@@ -20,13 +18,14 @@ for scorecount in range(int(input("How many scores do you want to enter? "))):
     numbers.append(actscore)
     scorecount = scorecount + 1
 
-# Removing the lowest grade
-newnumlist=[x for x in numbers
-            if x>min(numbers)]
 
 # Getting smallest grade and the average grade
 smallestnum = min(numbers)
-avgnum = sum(newnumlist)/len(newnumlist)
+
+# Removing the lowest grade
+numbers.remove(min(numbers))
+
+avgnum = sum(numbers)/len(numbers)
 
 # Numerical grade calculation
 if avgnum >= 90:
@@ -42,7 +41,7 @@ print()
 # Section for printing out the results with certain formatting
 print("------------Results------------")
 print(f"{'Lowest score':<20}: {smallestnum}")
-print(f"{'Modified List':<20}: {newnumlist}")
+print(f"{'Modified List':<20}: {numbers}")
 print(f"{'Scores Average':<20}: {avgnum:.2f}")
 print(f"{'Grade':<20}: {gradeavg}")
 print("-------------------------------")
