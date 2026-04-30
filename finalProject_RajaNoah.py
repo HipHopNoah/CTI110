@@ -6,6 +6,17 @@
 import random
 import time
 
+def makingcharacter():
+    name = input("Enter Puffin's name: ")
+    energy = 50
+    character = {'name': name, 'energy': energy}
+    print(f"{name} is ready to hunt for fish!")
+    return character, energy
+
+def showcharacterinven(character):
+    for char in character:
+        print(f"Name: {char['name']}, Energy: {char['energy']}")
+
 def raritychooser():
     raritynumber = round(random.uniform(1,5))
     if raritynumber == 1:
@@ -75,13 +86,13 @@ def raritychooser():
                 print(randomnumber)
 
 
-# fix this to make it not yes but no cause it keeps stopping after 4 runs
 if __name__ == "__main__":
+    makingcharacter()
+    showcharacterinven(character)
+    print()
     raritychooser()
     print()
     playagain = input("Would you like to dive back into the water? (Yes/No): ")
     for playagain in ("Yes"):
         raritychooser()
         playagain = input("Would you like to dive back into the water? (Yes/No): ")
-
-# put the would you like to try again in the main function
