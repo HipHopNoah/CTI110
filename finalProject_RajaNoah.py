@@ -8,91 +8,53 @@ import time
 
 def makingcharacter():
     name = input("Enter Puffin's name: ")
-    energy = 50
-    character = {'name': name, 'energy': energy}
+    character = {'name': name, 'energy': 50, 'inventory': []}
     print(f"{name} is ready to hunt for fish!")
-    return character, energy
+    return character
 
 def showcharacterinven(character):
-    for char in character:
-        print(f"Name: {char['name']}, Energy: {char['energy']}")
+    print("Current Sates")
+    print(f"Name: {character['name']}")
+    print(f"Energy: {character['energy']}")
+    print(f"Fish: {len(character['inventory'])}")
 
-def raritychooser():
-    raritynumber = round(random.uniform(1,5))
-    if raritynumber == 1:
-        typeofrarity = ("common")
-        decidingfactor = input("A common fish has spawned! Would you like to try to catch it? (Yes/No): ")
-        if decidingfactor == ("Yes"):
-            print("Catching in process... (You have a 75% success rate)")
-            randomnumber = random.randint(1,3)
-            if randomnumber <= 2:
-                time.sleep(3)
-                print("Congrats you have caught the fish! Your inventory has been updated.")
-            if randomnumber >= 2:
-                time.sleep(3)
-                print("You failed ")
-                print(randomnumber)
-    elif raritynumber == 2:
-        typeofrarity = ("uncommon")
-        decidingfactor = input("An uncommon fish has spawned! Would you like to try to catch it? (Yes/No): ")
-        if decidingfactor == ("Yes"):
-            print("Catching in process... (You have a 50% success rate)")
-            randomnumber = random.randint(1,2)
-            if randomnumber == 1:
-                time.sleep(3)
-                print("Congrats you have caught the fish! Your inventory has been updated.")
-            if randomnumber != 1:
-                time.sleep(3)
-                print("You failed")
-                print(randomnumber)
-    elif raritynumber == 3:
-        typeofrarity = ("rare")
-        decidingfactor = input("A rare fish has spawned! Would you like to try to catch it? (Yes/No): ")
-        if decidingfactor == ("Yes"):
-            print("Catching in process... (You have a 25% success rate)")
-            randomnumber = random.randint(1,4)
-            if randomnumber == 1:
-                time.sleep(3)
-                print("Congrats you have caught the fish! Your inventory has been updated.")
-            if randomnumber != 1:
-                time.sleep(3)
-                print("You failed")
-                print(randomnumber)
-    elif raritynumber == 4:
-        typeofrarity = ("ultra rare")
-        decidingfactor = input("An ultra rare fish has spawned! Would you like to try to catch it? (Yes/No): ")
-        if decidingfactor == ("Yes"):
-            print("Catching in process... (You have a 10% success rate)")
-            randomnumber = random.randint(1,10)
-            if randomnumber == 1:
-                time.sleep(3)
-                print("Congrats you have caught the fish! Your inventory has been updated.")
-            if randomnumber != 1:
-                time.sleep(3)
-                print("You failed")
-                print(randomnumber)
-    elif raritynumber == 5:
-        typeofrarity = ("legendary")
-        decidingfactor = input("A legendary fish has spawned! Would you like to try to catch it? (Yes/No): ")
-        if decidingfactor == ("Yes"):
-            print("Catching in process... (You have a 5% success rate)")
-            randomnumber = random.randint(1,20)
-            if randomnumber == 1:
-                time.sleep(3)
-                print("Congrats you have caught the fish! Your inventory has been updated.")
-            if randomnumber != 1:
-                time.sleep(3)
-                print("You failed")
-                print(randomnumber)
-
+def raritychooser(character):
+    character ['energy'] -= 10
+    raritynumber = random.randint(1,5)
+    fishtypes = {
+        1: ("Common", 100, 1), 2: ("Uncommon", 50, 2), 3: ("Rare", 25, 4), 4: ("Ultra rare", 10, 10), 5: ("Legendary", 5, 20)
+    }
+    rarityname, percent, chancemax = fishtypes[raritynumber]
+    decidingfactor = input(f"A {rarityname} fish has spawned! (Energy: {character['energy']}) Catch it? (Yes/No): ")
+    if decidingfactor == ("Yes"):
+        print(f"Catching in process... (You have a {percent}% success rate)")
+        time.sleep(1.5)
+        if random.randint(1, chancemax) == 1:
+            print(f"Congrats! You caught a {rarityname} fish!")
+            character['inventory'].append(rarityname)
+        else:
+            print("You flopped LOL")
+    else:
+        print("You went to sleep for some reason...")
 
 if __name__ == "__main__":
-    makingcharacter()
-    showcharacterinven(character)
+    my_puffin = makingcharacter()
+    playing = True
+    while playing and my_puffin['energy'] > 0:
+        showcharacterinven(my_puffin)
+        print()
+        raritychooser(my_puffin)
+        print()
+        if my_puffin['energy'] <= 0:
+            print()
+            print("You're too tired to fish anymore! Time for a nap.")
+            playing = False
+        else:
+            print()
+            choice = input("Would you like to dive back in? (Yes/No): ")
+            if choice != "yes":
+                playing = True
     print()
-    raritychooser()
-    print()
-    playagain = input("Would you like to dive back into the water? (Yes/No): ")
-    for playagain in ("Yes"):
-        raritychooser()
-        playagain = input("Would you like to dive back into the water? (Yes/No): ")
+    print("--- Final Results ---")
+    showcharacterinven(my_puffin)
+    print("Thanks for playing!")
