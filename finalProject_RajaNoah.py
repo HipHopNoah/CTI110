@@ -16,7 +16,7 @@ def showcharacterinven(character):
     print("Current Sates")
     print(f"Name: {character['name']}")
     print(f"Energy: {character['energy']}")
-    print(f"Fish: {len(character['inventory'])}")
+    print(f"Fish: {(character['inventory'])}")
 
 def raritychooser(character):
     character ['energy'] -= 10
@@ -33,9 +33,10 @@ def raritychooser(character):
             print(f"Congrats! You caught a {rarityname} fish!")
             character['inventory'].append(rarityname)
         else:
-            print("You flopped LOL")
+            print("The fish swam away...")
     else:
         print("You went to sleep for some reason...")
+        character ['energy'] += 10
 
 if __name__ == "__main__":
     my_puffin = makingcharacter()
@@ -52,8 +53,10 @@ if __name__ == "__main__":
         else:
             print()
             choice = input("Would you like to dive back in? (Yes/No): ")
-            if choice != "yes":
+            if choice == "Yes":
                 playing = True
+            if choice == "No":
+                playing = False
     print()
     print("--- Final Results ---")
     showcharacterinven(my_puffin)
