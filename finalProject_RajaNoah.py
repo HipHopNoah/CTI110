@@ -13,7 +13,7 @@ def makingcharacter():
     return character
 
 def showcharacterinven(character):
-    print("Current Sates")
+    print("Current Stats")
     print(f"Name: {character['name']}")
     print(f"Energy: {character['energy']}")
     print(f"Fish: {(character['inventory'])}")
